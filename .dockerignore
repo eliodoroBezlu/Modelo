@@ -6,40 +6,34 @@ __pycache__/
 .Python
 env/
 venv/
-ENV/
-.venv
+.venv/
 
 # IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Logs
+*.log
 
 # Testing
 .pytest_cache/
 .coverage
 htmlcov/
 
-# Modelos entrenados (se entrenarán en producción)
-models/*.pkl
-
-# Datos locales
-data/*.jsonl
-
-# Git
-.git/
-.gitignore
-
-# Docker
-Dockerfile
-.dockerignore
-docker-compose.yml
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Env files (no subir credenciales)
+# Environment
+.env
 .env.local
-.env.development
+
+# Models (se generan en runtime)
+models/*.pkl
+data/*.jsonl
