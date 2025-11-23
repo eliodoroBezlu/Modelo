@@ -25,5 +25,4 @@ RUN mkdir -p /app/models /app/data
 # Exponer puerto (Railway usa PORT de variable de entorno)
 EXPOSE 8000
 
-# Comando para iniciar la aplicación
 CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
