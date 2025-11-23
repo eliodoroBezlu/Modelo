@@ -25,5 +25,5 @@ RUN mkdir -p /app/models /app/data
 # Exponer puerto (Railway lo sobreescribe con $PORT)
 EXPOSE 8000
 
-# 🔥 IMPORTANTE: Usar variable de entorno PORT de Railway
-CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}
+# 🔥 FIX: Usar formato JSON para CMD (Railway compatible)
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
