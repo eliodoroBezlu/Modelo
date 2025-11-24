@@ -1,3 +1,4 @@
+# app/main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
@@ -15,7 +16,9 @@ async def lifespan(app: FastAPI):
     print("🚀 ML Service iniciando...")
     print(f"📍 Environment: {settings.ENVIRONMENT}")
     print(f"📍 Port: {settings.PORT}")
+    print(f"📍 Host: {settings.HOST}")
     print(f"📍 Model Path: {settings.MODEL_PATH}")
+    print(f"🔍 CORS Origins: {settings.origins_list}")  # ← Ver qué orígenes permite
     
     # Verificar modelo cargado
     health = ml_service.check_health()
@@ -28,7 +31,7 @@ async def lifespan(app: FastAPI):
     
     yield  # Aquí la aplicación está corriendo
     
-    # Shutdown (opcional)
+    # Shutdown
     print("🛑 ML Service cerrando...")
 
 
@@ -36,13 +39,13 @@ app = FastAPI(
     title="ML Recommendation Service",
     description="Servicio de recomendaciones ML para auditorías",
     version="1.0.0",
-    lifespan=lifespan  # 🔥 NUEVO: usar lifespan
+    lifespan=lifespan,
 )
 
-# CORS - Importante para Railway
+# ✅ CORS - Configurado dinámicamente según entorno
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.origins_list,
+    allow_origins=settings.origins_list,  # ← Usa la lista dinámica
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -59,7 +62,8 @@ async def root():
         "service": "ML Recommendation Service",
         "status": "running",
         "version": "1.0.0",
-        "environment": settings.ENVIRONMENT
+        "environment": settings.ENVIRONMENT,
+        "allowed_origins": settings.origins_list  # ← Útil para debug
     }
 
 
